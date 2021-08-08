@@ -16,6 +16,7 @@ fn main() {
             vsync: true,
             ..Default::default()
         })
+        .insert_resource(Game::default())
         .add_plugins(DefaultPlugins)
         .add_plugin(GamePlugin)
         .add_startup_system(setup.system())
