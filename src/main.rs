@@ -1,10 +1,11 @@
 extern crate bevy;
-extern crate apple_game as game;
+extern crate apple_game as root;
 
 use bevy::prelude::*;
 use bevy::app::App;
-use game::plugin::game::GamePlugin;
-use game::system::setup::setup;
+use root::plugin::game::GamePlugin;
+use root::resource::game::Game;
+use root::system::setup::setup;
 
 fn main() {
     App::build()
