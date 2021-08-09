@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 use bevy::sprite::collide_aabb::collide;
+use component::apple::Apple;
 use component::mover::Mover;
 use component::block::Block;
 use resource::game::Game;
@@ -43,7 +44,7 @@ pub fn check_spawn_object(
         ObjectType::Apple => asset_server.load("textures/apple.png"),
         ObjectType::Block => asset_server.load("textures/block.png"),
     };
-    commands
+    let mut object_spawn = commands
         .spawn_bundle(SpriteBundle {
             material: materials.add(texture.into()),
             sprite: Sprite::new(Vec2::new(90., 90.)),
@@ -53,8 +54,12 @@ pub fn check_spawn_object(
                 scale: scale,
             },
             ..Default::default()
-        })
-        .insert(Mover {
+        });
+    object_spawn.insert(Mover {
             velocity: Vec2::new(0., - (SPEED_BASE))
         });
+    match object_type {
+        ObjectType::Apple => object_spawn.insert(Apple::default()),
+        ObjectType::Block => object_spawn.insert(Block::default()),
+    };
 }
