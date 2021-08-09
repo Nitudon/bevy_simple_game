@@ -2,12 +2,15 @@ use bevy::ecs::system::Commands;
 use bevy::prelude::*;
 use component::player::Player;
 use component::mover::Mover;
-use resource::game::ScoreText;
+use resource::game::{ScoreText, Game};
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>, mut materials: ResMut<Assets<ColorMaterial>>) {
     commands.spawn_bundle(OrthographicCameraBundle::new_2d());
     commands.spawn_bundle(UiCameraBundle::default());
 
+    // Game
+    commands.insert_resource(Game::new());
+    
     // Stage
     let stage_texture_handle = asset_server.load("textures/stage.png");
     commands.spawn_bundle(SpriteBundle {
