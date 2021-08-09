@@ -1,21 +1,20 @@
 #[derive(Default)]
 pub struct Game {
-    time: i32,
-    score: i32,
+    pub time: f32,
+    pub spawn_time: i32,
+    pub score: i32,
+    pub level: i32,
+    pub is_start: bool,
 }
 
 pub struct ScoreText;
 
 impl Game {
-    pub fn score(&self) -> &i32 {
-        &self.score
-    } 
-    
-    pub fn decrement_time(&mut self) {
-        self.time = &self.time - 1;
-    }
-    
-    pub fn add_score(&mut self, add: i32) {
-        self.score += add; 
+    pub fn new() -> Game {
+        Game{
+            time: 120.,
+            is_start: true,
+            ..Default::default()
+        }
     }
 }
