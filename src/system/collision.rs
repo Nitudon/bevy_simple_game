@@ -3,9 +3,11 @@ use component::player::Player;
 use component::block::Block;
 use bevy::sprite::collide_aabb::collide;
 use component::apple::Apple;
+use resource::game::Game;
 
 pub fn collision(
     mut commands: Commands,
+    mut game: ResMut<Game>,
     mut player_query: Query<(&mut Player, &Transform, &Sprite)>,
     mut apple_query: Query<(Entity, &mut Apple, &Transform, &Sprite)>,
     mut block_query: Query<(Entity, &mut Block, &Transform, &Sprite)>) {
@@ -40,6 +42,7 @@ pub fn collision(
                 apple_sprite.size,
             );
             if let Some(collision) = collision {
+                game.score += 100;
                 commands.entity(apple_entity).despawn();
             }
         }
