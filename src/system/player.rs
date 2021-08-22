@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use component::player::Player;
 use component::mover::Mover;
-use resource::game::Game;
+use resource::game::{Game, GameState};
 
 pub fn player_input_system(
     keyboard_input: Res<Input<KeyCode>>,
@@ -22,6 +22,21 @@ pub fn player_input_system(
         }
         else {
             *velocity = Vec2::ZERO;
+        }
+    }
+}
+
+pub fn player_life_system(
+    mut game: ResMut<Game>,
+    query: Query<&Player>,
+) {
+    if game.is_game() == false {
+        return;
+    }
+
+    if let Ok(player) = query.single() {
+        if player.life <= 0 {
+            game.state = GameState::Result;
         }
     }
 }

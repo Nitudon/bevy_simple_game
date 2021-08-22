@@ -1,4 +1,4 @@
 #[derive(Default)]
 pub struct Player {
-    pub life: usize,
+    pub life: i32,
 }

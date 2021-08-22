@@ -2,6 +2,7 @@ use crate::system::{
     collision::collision,
     object_spawn::check_spawn_object,
     player::player_input_system,
+    player::player_life_system,
     translate::translate_mover_system,
     score::score_board_system,
     time::update_time,
@@ -18,6 +19,7 @@ impl Plugin for GamePlugin {
         app.add_system(collision.system());
         app.add_system(check_spawn_object.system());
         app.add_system(player_input_system.system());
+        app.add_system(player_life_system.system());
         app.add_system(translate_mover_system.system());
         app.add_system(score_board_system.system());
         app.add_system(update_time.system());

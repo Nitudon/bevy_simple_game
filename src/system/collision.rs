@@ -30,6 +30,7 @@ pub fn collision(
             );
             if let Some(collision) = collision {
                 commands.entity(block_entity).despawn();
+                player.life -= 1;
             }
         }
 
