@@ -2,41 +2,66 @@ use bevy::prelude::*;
 use component::player::Player;
 use component::mover::Mover;
 use resource::game::{Game, GameState};
+use component::apple::Apple;
+use component::block::Block;
 
 pub fn player_input_system(
     keyboard_input: Res<Input<KeyCode>>,
     game: Res<Game>,
-    mut query: Query<(&mut Mover, &Player)>,
+    mut query: Query<(&mut Mover, &Transform), With<Player>>,
 ) {
     if game.is_game() == false {
         return;
     }
     
-    if let Ok((mut mover, player)) = query.single_mut() {
-        let velocity = &mut mover.velocity;
+    if let Ok((mut mover, transform)) = query.single_mut() {
         if keyboard_input.pressed(KeyCode::Left) {
-            velocity.x = -2.0;
+            if transform.translation.x <= -435.0 {
+                mover.stop();
+            } else {
+                mover.velocity.x = -2.0; 
+            }
         }
         else if keyboard_input.pressed(KeyCode::Right) {
-            velocity.x = 2.0;
+            if transform.translation.x >= 435.0 {
+                mover.stop();
+            } else {
+                mover.velocity.x = 2.0;
+            }
         }
         else {
-            *velocity = Vec2::ZERO;
+            mover.stop();
         }
     }
 }
 
 pub fn player_life_system(
+    mut commands: Commands,
     mut game: ResMut<Game>,
-    query: Query<&Player>,
+    query_player: Query<&Player>,
+    mut query_mover: Query<&mut Mover>,
+    mut query_apple: Query<Entity, With<Apple>>,
+    mut query_block: Query<Entity, With<Block>>,
 ) {
     if game.is_game() == false {
         return;
     }
 
-    if let Ok(player) = query.single() {
+    if let Ok(player) = query_player.single() {
         if player.life <= 0 {
             game.state = GameState::Result;
+            
+            for mut mover in query_mover.iter_mut() {
+                mover.stop();
+            }
+            
+            for mut apple in query_apple.iter_mut() {
+                commands.entity(apple).despawn();
+            }
+
+            for mut block in query_block.iter_mut() {
+                commands.entity(block).despawn();
+            }
         }
     }
 }

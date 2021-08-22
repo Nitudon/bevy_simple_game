@@ -4,3 +4,9 @@ use bevy::math::Vec2;
 pub struct Mover {
     pub velocity: Vec2,
 }
+
+impl Mover {
+    pub fn stop(&mut self) {
+        self.velocity = Vec2::ZERO;
+    }
+}

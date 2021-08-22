@@ -41,8 +41,8 @@ pub fn check_spawn_object(
     }
     
     game.spawn_time = 0.;
-    
-    for _ in 0..min(5, (1.0 + game.level as f32 * 0.3) as i32) {
+    let spawn_count = min(5, (1.0 + game.level as f32 * 0.3) as i32);
+    for _ in 0..spawn_count {
         let object_rand = rand::thread_rng().gen_range(1..10);
         let object_type = if object_rand < 4 {
             ObjectType::Block
