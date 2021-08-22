@@ -11,6 +11,10 @@ pub fn collision(
     mut player_query: Query<(&mut Player, &Transform, &Sprite)>,
     mut apple_query: Query<(Entity, &mut Apple, &Transform, &Sprite)>,
     mut block_query: Query<(Entity, &mut Block, &Transform, &Sprite)>) {
+    if game.is_game() == false {
+        return;
+    }
+    
     if let Ok((mut player, player_transform, player_sprite)) = player_query.single_mut() {
         for (block_entity, block, block_transform, block_sprite) in block_query.iter_mut() {
             if block_transform.translation.y < -480. {
@@ -42,7 +46,7 @@ pub fn collision(
                 apple_sprite.size,
             );
             if let Some(collision) = collision {
-                game.score += 100;
+                game.add_score(apple.score);
                 commands.entity(apple_entity).despawn();
             }
         }

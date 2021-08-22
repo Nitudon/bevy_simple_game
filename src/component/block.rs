@@ -1,4 +1,4 @@
 #[derive(Default)]
 pub struct Block {
-    damage: usize,
+    pub damage: usize,
 }

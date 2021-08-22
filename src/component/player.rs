@@ -1,4 +1,4 @@
 #[derive(Default)]
 pub struct Player {
-    life: usize,
+    pub life: usize,
 }

@@ -5,6 +5,7 @@ use crate::system::{
     translate::translate_mover_system,
     score::score_board_system,
     time::update_time,
+    title::wait_title_screen,
 };
 use bevy::app::{Plugin, AppBuilder};
 use bevy::prelude::*;
@@ -20,5 +21,6 @@ impl Plugin for GamePlugin {
         app.add_system(translate_mover_system.system());
         app.add_system(score_board_system.system());
         app.add_system(update_time.system());
+        app.add_system(wait_title_screen.system());
     }
 }

@@ -2,7 +2,8 @@ use bevy::ecs::system::Commands;
 use bevy::prelude::*;
 use component::player::Player;
 use component::mover::Mover;
-use resource::game::{ScoreText, Game};
+use resource::game::{Game, GameState, ScoreText};
+use system::title::setup_title_ui;
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>, mut materials: ResMut<Assets<ColorMaterial>>) {
     commands.spawn_bundle(OrthographicCameraBundle::new_2d());
@@ -54,7 +55,7 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>, mut materia
                 ..Default::default()
             },
             text: Text::with_section(
-                "---",
+                "",
                 TextStyle {
                     font: asset_server.load("fonts/PixelMplus10-Regular.ttf"),
                     font_size: 64.0,
@@ -68,4 +69,6 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>, mut materia
             ..Default::default()
         })
         .insert(ScoreText);
+    
+    setup_title_ui(commands, asset_server);
 }
