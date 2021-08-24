@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use resource::game::{ScoreText, Game};
 
-pub fn score_board_system(mut game: Res<Game>, mut query: Query<&mut Text, With<ScoreText>>) {
+pub fn score_board_system(game: Res<Game>, mut query: Query<&mut Text, With<ScoreText>>) {
     if game.is_game() == false {
         return;
     }

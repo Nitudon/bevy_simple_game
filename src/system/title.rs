@@ -1,7 +1,5 @@
 use bevy::ecs::system::Commands;
 use bevy::prelude::*;
-use component::player::Player;
-use component::mover::Mover;
 use resource::game::{Game, GameState};
 
 pub struct TitleScreen;

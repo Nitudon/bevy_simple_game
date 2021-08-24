@@ -2,7 +2,7 @@ use bevy::ecs::system::Commands;
 use bevy::prelude::*;
 use component::player::Player;
 use component::mover::Mover;
-use resource::game::{Game, GameState, ScoreText};
+use resource::game::{Game, ScoreText};
 use system::title::setup_title_ui;
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>, mut materials: ResMut<Assets<ColorMaterial>>) {

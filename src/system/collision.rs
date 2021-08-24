@@ -28,9 +28,9 @@ pub fn collision(
                 block_transform.translation,
                 block_sprite.size,
             );
-            if let Some(collision) = collision {
+            if let Some(_) = collision {
                 commands.entity(block_entity).despawn();
-                player.life -= 1;
+                player.life -= block.damage;
             }
         }
 
@@ -46,7 +46,7 @@ pub fn collision(
                 apple_transform.translation,
                 apple_sprite.size,
             );
-            if let Some(collision) = collision {
+            if let Some(_) = collision {
                 game.add_score(apple.score);
                 commands.entity(apple_entity).despawn();
             }

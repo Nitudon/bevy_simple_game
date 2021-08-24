@@ -5,6 +5,8 @@ use resource::game::{Game, GameState};
 use component::apple::Apple;
 use component::block::Block;
 
+const PLAYER_SPEED: f32 = 3.0;
+
 pub fn player_input_system(
     keyboard_input: Res<Input<KeyCode>>,
     game: Res<Game>,
@@ -19,14 +21,14 @@ pub fn player_input_system(
             if transform.translation.x <= -435.0 {
                 mover.stop();
             } else {
-                mover.velocity.x = -2.0; 
+                mover.velocity.x = -PLAYER_SPEED; 
             }
         }
         else if keyboard_input.pressed(KeyCode::Right) {
             if transform.translation.x >= 435.0 {
                 mover.stop();
             } else {
-                mover.velocity.x = 2.0;
+                mover.velocity.x = PLAYER_SPEED;
             }
         }
         else {
@@ -55,11 +57,11 @@ pub fn player_life_system(
                 mover.stop();
             }
             
-            for mut apple in query_apple.iter_mut() {
+            for apple in query_apple.iter_mut() {
                 commands.entity(apple).despawn();
             }
 
-            for mut block in query_block.iter_mut() {
+            for block in query_block.iter_mut() {
                 commands.entity(block).despawn();
             }
         }

@@ -1,4 +1,3 @@
-use component::player::Player;
 use component::mover::Mover;
 use bevy::prelude::*;
 

@@ -1,21 +1,14 @@
 use bevy::prelude::*;
-use bevy::sprite::collide_aabb::collide;
 use component::apple::Apple;
 use component::mover::Mover;
 use component::block::Block;
 use resource::game::Game;
 use rand::Rng;
-use std::cmp::{max, min};
+use std::cmp::min;
 
 const SPEED_BASE : f32 = 2.0;
 const SPEED_UP : f32 = 0.3;
 const SPAWN_X_DISTANCE : f32 = 480.;
-
-#[derive(Default)]
-pub struct ObjectSpawner {
-    is_active: bool,
-    level: i32,
-}
 
 pub enum ObjectType {
     Apple,
@@ -69,13 +62,15 @@ pub fn check_spawn_object(
                 ..Default::default()
             });
         object_spawn.insert(Mover {
-            velocity: Vec2::new(0., - (SPEED_BASE + SPEED_UP * game.level as f32))
+            velocity: Vec2::new(0., - (SPEED_BASE * rand::thread_rng().gen_range(0.8..1.2) + SPEED_UP * game.level as f32))
         });
         match object_type {
             ObjectType::Apple => object_spawn.insert(Apple{
                 score: 100,
             }),
-            ObjectType::Block => object_spawn.insert(Block::default()),
+            ObjectType::Block => object_spawn.insert(Block{
+                damage: 1,
+            }),
         };
     }
 }
