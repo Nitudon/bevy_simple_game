@@ -9,6 +9,9 @@ use std::cmp::min;
 const SPEED_BASE : f32 = 2.0;
 const SPEED_UP : f32 = 0.3;
 const SPAWN_X_DISTANCE : f32 = 480.;
+const SPAWN_INTERVAL_BASE : f32 = 2.5;
+const SPAWN_INTERVAL_MIN : f32 = 0.5;
+const SPAWN_INTERVAL_MINUS : f32 = 0.3;
 
 pub enum ObjectType {
     Apple,
@@ -21,16 +24,16 @@ pub fn check_spawn_object(
     mut game: ResMut<Game>,
     mut materials: ResMut<Assets<ColorMaterial>>
 ) {
-    let mut interval = 2.5 - game.level as f32 * 0.3;
-    if interval < 0.5 {
-        interval = 0.5;
+    let mut interval = SPAWN_INTERVAL_BASE - game.level as f32 * SPAWN_INTERVAL_MINUS;
+    if interval < SPAWN_INTERVAL_MIN {
+        interval = SPAWN_INTERVAL_MIN;
     }
     if game.spawn_time < interval {
         return;
     }
     
     game.spawn_time = 0.;
-    let spawn_count = min(5, (1.0 + game.level as f32 * 0.3) as i32);
+    let spawn_count = min(5, 1 + (game.level as f32 * 0.3) as i32);
     for _ in 0..spawn_count {
         let object_rand = rand::thread_rng().gen_range(1..10);
         let object_type = if object_rand < 4 {
