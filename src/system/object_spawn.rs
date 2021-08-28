@@ -21,10 +21,6 @@ pub fn check_spawn_object(
     mut game: ResMut<Game>,
     mut materials: ResMut<Assets<ColorMaterial>>
 ) {
-    if game.is_game() == false {
-        return;
-    }
-    
     let mut interval = 2.5 - game.level as f32 * 0.3;
     if interval < 0.5 {
         interval = 0.5;

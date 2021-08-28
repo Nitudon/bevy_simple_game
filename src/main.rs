@@ -3,9 +3,19 @@ extern crate apple_game as root;
 
 use bevy::prelude::*;
 use bevy::app::App;
-use root::plugin::game::GamePlugin;
 use root::resource::game::Game;
-use root::system::setup::setup;
+use root::{
+    setup,
+    GameState
+};
+use root::system::{
+    title_enter_system_set, 
+    title_update_system_set, 
+    game_enter_system_set, 
+    game_update_system_set, 
+    title_exit_system_set, 
+    game_exit_system_set, 
+};
 
 fn main() {
     App::build()
@@ -17,9 +27,15 @@ fn main() {
             ..Default::default()
         })
         .insert_resource(Game::default())
-        .add_plugins(DefaultPlugins)
-        .add_plugin(GamePlugin)
-        .add_startup_system(setup.system())
         .insert_resource(ClearColor(Color::rgb(0.9, 0.9, 0.9)))
+        .add_plugins(DefaultPlugins)
+        .add_state(GameState::Title)
+        .add_startup_system(setup.system())
+        .add_system_set(title_enter_system_set())
+        .add_system_set(title_update_system_set())
+        .add_system_set(title_exit_system_set())
+        .add_system_set(game_enter_system_set())
+        .add_system_set(game_update_system_set())
+        .add_system_set(game_exit_system_set())
         .run();
 }
