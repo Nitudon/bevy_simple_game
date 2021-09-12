@@ -1,5 +1,6 @@
 const PLAYER_LIFE: i32 = 3;
 
+// プレイヤーを表すComponent、基本的にライフの値のModel
 pub struct Player {
     pub life: i32,
 }

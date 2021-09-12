@@ -11,13 +11,18 @@ use bevy::prelude::*;
 use component::player::Player;
 use component::mover::Mover;
 
+// ゲーム内の状態
 #[derive(Clone, Eq, PartialEq, Debug, Hash)]
 pub enum GameState {
+    // クリックしてゲーム開始を待つ画面
     Title,
+    // ゲーム中
     Playing,
+    // クリックしてゲーム終了を待つ画面
     GameOver,
 }
 
+// ゲームを構成する全体で必要な要素を表すstruct
 pub struct GameScene;
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>, mut materials: ResMut<Assets<ColorMaterial>>) {

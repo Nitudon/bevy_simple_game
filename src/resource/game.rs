@@ -1,3 +1,4 @@
+// ゲーム内のパラメータを表すResource
 #[derive(Default)]
 pub struct Game {
     pub time: f32,
@@ -17,11 +18,13 @@ impl Game {
         }
     }
     
+    // スコアの加算とレベル更新
     pub fn add_score(&mut self, score: i32) {
         self.score += score;
         self.level = self.score / LEVEL_UP_SCORE;
     }
     
+    // 状態を初期に戻す
     pub fn reset(&mut self) {
         self.time = GAME_TIME;
         self.spawn_time = 0.;

@@ -1,5 +1,6 @@
 const APPLE_DEFAULT_SCORE: i32 = 100;
 
+// ゲーム内に落ちてくる林檎を表すComponent
 pub struct Apple {
     pub score: i32
 }
