@@ -21,9 +21,9 @@ cargo run
 ```
 
 # Control
-Left key : Move left
-Right key : Move right
+ * Left key : Move left　
+ * Right key : Move right
 
 # Credits
-Texture: [いらすとや](https://www.irasutoya.com/)
-Font: [PixelMplus10-Regular.ttf](https://itouhiro.hatenablog.com/entry/20130602/font)
+ * Texture: [いらすとや](https://www.irasutoya.com/)
+ * Font: [PixelMplus10-Regular.ttf](https://itouhiro.hatenablog.com/entry/20130602/font)
