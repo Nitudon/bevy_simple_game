@@ -5,6 +5,8 @@ use bevy::sprite::collide_aabb::collide;
 use component::apple::Apple;
 use resource::game::Game;
 
+const OBJECT_DESPAWN_Y : f32 = -480.;
+
 pub fn collision(
     mut commands: Commands,
     mut game: ResMut<Game>,
@@ -14,7 +16,7 @@ pub fn collision(
     
     if let Ok((mut player, player_transform, player_sprite)) = player_query.single_mut() {
         for (block_entity, block, block_transform, block_sprite) in block_query.iter_mut() {
-            if block_transform.translation.y < -480. {
+            if block_transform.translation.y < OBJECT_DESPAWN_Y {
                 commands.entity(block_entity).despawn(); 
                 break;
             }
@@ -32,7 +34,7 @@ pub fn collision(
         }
 
         for (apple_entity, apple, apple_transform, apple_sprite) in apple_query.iter_mut() {
-            if apple_transform.translation.y < -480. {
+            if apple_transform.translation.y < OBJECT_DESPAWN_Y {
                 commands.entity(apple_entity).despawn();
                 break;
             }

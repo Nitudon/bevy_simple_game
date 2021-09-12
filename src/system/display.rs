@@ -37,7 +37,7 @@ pub fn setup_title_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
         });
 }
 
-pub fn set_game_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
+pub fn setup_game_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
     // Game Score Label
     commands
         .spawn_bundle(TextBundle {
@@ -97,9 +97,47 @@ pub fn set_game_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
         .insert(GameLifeLabel);
 }
 
-pub fn wait_title_screen(mut state: ResMut<State<GameState>>, input: Res<Input<MouseButton>>) {
+pub fn setup_game_over_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
+    // Game Over Label
+    commands
+        .spawn_bundle(TextBundle {
+            style: Style {
+                align_self: AlignSelf::Center,
+                position_type: PositionType::Absolute,
+                position: Rect {
+                    top: Val::Percent(50.),
+                    left: Val::Px(320.),
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            text: Text::with_section(
+                "Game Over",
+                TextStyle {
+                    font: asset_server.load("fonts/PixelMplus10-Regular.ttf"),
+                    font_size: 80.0,
+                    color: Color::WHITE,
+                },
+                TextAlignment {
+                    horizontal: HorizontalAlign::Center,
+                    ..Default::default()
+                },
+            ),
+            ..Default::default()
+        });
+}
+
+pub fn wait_title_screen(mut state: ResMut<State<GameState>>, mut input: ResMut<Input<MouseButton>>) {
     if input.just_pressed(MouseButton::Left) {
         state.set(GameState::Playing).unwrap();
+        input.reset(MouseButton::Left);
+    }
+}
+
+pub fn wait_game_over_screen(mut state: ResMut<State<GameState>>, mut input: ResMut<Input<MouseButton>>) {
+    if input.just_pressed(MouseButton::Left) {
+        state.set(GameState::Title).unwrap();
+        input.reset(MouseButton::Left);
     }
 }
 

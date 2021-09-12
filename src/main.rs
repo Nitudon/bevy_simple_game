@@ -15,6 +15,9 @@ use root::system::{
     game_update_system_set, 
     title_exit_system_set, 
     game_exit_system_set, 
+    game_over_enter_system_set, 
+    game_over_update_system_set,
+    game_over_exit_system_set
 };
 
 fn main() {
@@ -26,7 +29,7 @@ fn main() {
             vsync: true,
             ..Default::default()
         })
-        .insert_resource(Game::default())
+        .insert_resource(Game::new())
         .insert_resource(ClearColor(Color::rgb(0.9, 0.9, 0.9)))
         .add_plugins(DefaultPlugins)
         .add_state(GameState::Title)
@@ -37,5 +40,8 @@ fn main() {
         .add_system_set(game_enter_system_set())
         .add_system_set(game_update_system_set())
         .add_system_set(game_exit_system_set())
+        .add_system_set(game_over_enter_system_set())
+        .add_system_set(game_over_update_system_set())
+        .add_system_set(game_over_exit_system_set())
         .run();
 }
