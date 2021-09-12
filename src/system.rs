@@ -13,7 +13,8 @@ use self::translate::translate_mover_system;
 use self::display::{
     setup_title_ui, 
     setup_game_ui, 
-    setup_game_over_ui, 
+    setup_game_over_ui,
+    game_time_display_system,
     game_score_display_system, 
     player_life_display_system, 
     wait_title_screen, 
@@ -24,6 +25,9 @@ use ::{
     GameState, 
     GameScene
 };
+use resource::game::Game;
+use component::mover::Mover;
+use component::player::Player;
 
 // Title System
 pub fn title_enter_system_set() -> SystemSet {
@@ -53,6 +57,7 @@ pub fn game_update_system_set() -> SystemSet {
         .with_system(check_spawn_object.system())
         .with_system(player_input_system.system())
         .with_system(translate_mover_system.system())
+        .with_system(game_time_display_system.system())
         .with_system(game_score_display_system.system())
         .with_system(player_life_display_system.system())
         .with_system(update_game.system())
@@ -77,11 +82,21 @@ pub fn game_over_update_system_set() -> SystemSet {
 pub fn game_over_exit_system_set() -> SystemSet {
     SystemSet::on_exit(GameState::GameOver)
         .with_system(teardown.system())
+        .with_system(reset.system())
 }
 
 // Teardown State Entities
 fn teardown(mut commands: Commands, entities: Query<Entity, Without<GameScene>>) {
     for entity in entities.iter() {
         commands.entity(entity).despawn_recursive();
+    }
+}
+
+fn reset(mut game: ResMut<Game>, mut player_query: Query<(&mut Transform, &mut Mover, &mut Player)>) {
+    game.reset();
+    if let Ok((mut transform, mut mover, mut player)) = player_query.single_mut() {
+        transform.translation = Vec3::new(0., -200., 0.);
+        mover.stop();
+        player.reset();
     }
 }

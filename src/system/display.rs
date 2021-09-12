@@ -5,6 +5,7 @@ use GameState;
 
 // Game UI
 pub struct GameScoreLabel;
+pub struct GameTimeLabel;
 pub struct GameLifeLabel;
 
 pub fn setup_title_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
@@ -38,6 +39,35 @@ pub fn setup_title_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
 }
 
 pub fn setup_game_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
+    // Game Time Label
+    commands
+        .spawn_bundle(TextBundle {
+            style: Style {
+                align_self: AlignSelf::Center,
+                position_type: PositionType::Absolute,
+                position: Rect {
+                    top: Val::Px(20.0),
+                    left: Val::Px(60.0),
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            text: Text::with_section(
+                "",
+                TextStyle {
+                    font: asset_server.load("fonts/PixelMplus10-Regular.ttf"),
+                    font_size: 64.0,
+                    color: Color::WHITE,
+                },
+                TextAlignment {
+                    horizontal: HorizontalAlign::Center,
+                    ..Default::default()
+                },
+            ),
+            ..Default::default()
+        })
+        .insert(GameTimeLabel);
+    
     // Game Score Label
     commands
         .spawn_bundle(TextBundle {
@@ -45,7 +75,7 @@ pub fn setup_game_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
                 align_self: AlignSelf::Center,
                 position_type: PositionType::Absolute,
                 position: Rect {
-                    top: Val::Px(80.0),
+                    top: Val::Px(70.0),
                     left: Val::Px(60.0),
                     ..Default::default()
                 },
@@ -74,7 +104,7 @@ pub fn setup_game_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
                 align_self: AlignSelf::Center,
                 position_type: PositionType::Absolute,
                 position: Rect {
-                    top: Val::Px(30.0),
+                    top: Val::Px(120.0),
                     left: Val::Px(60.0),
                     ..Default::default()
                 },
@@ -144,6 +174,13 @@ pub fn wait_game_over_screen(mut state: ResMut<State<GameState>>, mut input: Res
 pub fn game_score_display_system(game: Res<Game>, mut score_query: Query<&mut Text, With<GameScoreLabel>>) {
     if let Ok(mut score_label) = score_query.single_mut() {
         score_label.sections[0].value = format!("Score: {}", game.score); 
+    }
+}
+
+pub fn game_time_display_system(game: Res<Game>, mut score_query: Query<&mut Text, With<GameTimeLabel>>) {
+    if let Ok(mut score_label) = score_query.single_mut() {
+        let time = game.time as i32;
+        score_label.sections[0].value = format!("Time: {}", time);
     }
 }
 
