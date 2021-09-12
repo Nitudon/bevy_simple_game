@@ -1,5 +1,5 @@
 # bevy_simple_game
-sample 2D game by [Bevy](https://bevyengine.org/) 
+An simple 2D game by [Bevy](https://bevyengine.org/) 
 
 ![](bevy_simple_game_demo.gif)
 
