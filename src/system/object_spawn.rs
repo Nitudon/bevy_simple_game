@@ -60,16 +60,10 @@ pub fn check_spawn_object(
                 },
                 ..Default::default()
             });
-        object_spawn.insert(Mover {
-            velocity: Vec2::new(0., - (SPEED_BASE * rand::thread_rng().gen_range(0.8..1.2) + SPEED_UP * game.level as f32))
-        });
+        object_spawn.insert(Mover::new(Vec2::new(0., - (SPEED_BASE * rand::thread_rng().gen_range(0.8..1.2) + SPEED_UP * game.level as f32))));
         match object_type {
-            ObjectType::Apple => object_spawn.insert(Apple{
-                score: 100,
-            }),
-            ObjectType::Block => object_spawn.insert(Block{
-                damage: 1,
-            }),
+            ObjectType::Apple => object_spawn.insert(Apple::default()),
+            ObjectType::Block => object_spawn.insert(Block::default()),
         };
     }
 }

@@ -56,9 +56,7 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>, mut materia
             ..Default::default()
         })
         .insert_bundle((
-            Player {
-                life: 3
-            },
+            Player::default(),
             Mover::default(),
             GameScene
         ));

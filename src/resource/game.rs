@@ -21,4 +21,11 @@ impl Game {
         self.score += score;
         self.level = self.score / LEVEL_UP_SCORE;
     }
+    
+    pub fn reset(&mut self) {
+        self.time = GAME_TIME;
+        self.spawn_time = 0.;
+        self.score = 0;
+        self.level = 0;
+    }
 }
